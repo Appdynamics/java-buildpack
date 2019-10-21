@@ -169,10 +169,10 @@ module JavaBuildpack
           'service-endpoint.xml',
           'transactions.xml'
         ]
-
-        puts "Downloading override configuration files from " + @application.environment['APPD_CONF_HTTP_URL']
+        agent_root = @application.environment['APPD_CONF_HTTP_URL'].chomp('/') + '/java/'
+        puts "Downloading override configuration files from #{agent_root}"
         conf_files.each do |conf_file|
-          uri = URI(@application.environment['APPD_CONF_HTTP_URL'].chomp('/') + '/java/' + conf_file)
+          uri = URI(agent_root + conf_file)
 
           # `download()` uses retries with exponential backoff which is expensive
           # for situations like 404 File not Found. Also, `download()` doesn't expose 
